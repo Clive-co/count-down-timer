@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#042118">
+<meta name="description" content="Countdown to an upcoming event by the Independent Corrupt Practices and Other Related Offences Commission (ICPC), Nigeria.">
+<title>ICPC Nigeria · Event Countdown</title>
+<link rel="icon" href="assets/icpc-logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #042118;
+    --green: #008751;
+    --green-soft: #2fbf7e;
+    --gold: #d4af37;
+    --text: #f5f3ec;
+    --muted: rgba(245, 243, 236, .7);
+    --line: rgba(245, 243, 236, .14);
+    --panel: rgba(4, 33, 24, .55);
+    --bg-image: url("assets/abuja-dusk.webp");
+    --serif: "Fraunces", Georgia, "Times New Roman", serif;
+    --sans: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--sans); color: var(--text); background: var(--bg); overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+  a { color: inherit; }
+  img { display: block; max-width: 100%; }
+
+  /* ---------- HEADER ---------- */
+  .flag { display: flex; height: 6px; }
+  .flag span { flex: 1; background: var(--green); }
+  .flag span:nth-child(2) { background: #fff; }
+
+  .topbar { position: relative; z-index: 2; background: #fff; color: #1f2937; box-shadow: 0 1px 0 rgba(0,0,0,.08); }
+  .topbar__inner { max-width: 1200px; margin: 0 auto; padding: 12px clamp(16px, 4vw, 40px); display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+  .topbar__logo { height: clamp(36px, 5vw, 52px); width: auto; }
+  .topbar__link { flex-shrink: 0; display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; border-radius: 999px; background: var(--green); color: #fff; font-size: .85rem; font-weight: 600; text-decoration: none; transition: background .2s; }
+  .topbar__link:hover { background: #006b40; }
+  .topbar__link:focus-visible, .btn:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+
+  /* ---------- HERO ---------- */
+  .hero { position: relative; isolation: isolate; overflow: hidden; min-height: calc(100svh - 70px); display: flex; align-items: center; justify-content: center; padding: clamp(48px, 9vh, 96px) 20px clamp(56px, 10vh, 110px); }
+  .hero__photo { position: absolute; inset: 0; z-index: -3; background: var(--bg-image) center 60% / cover no-repeat; transform: scale(1.05); animation: drift 32s ease-in-out infinite alternate; }
+  .hero__scrim { position: absolute; inset: 0; z-index: -2; background:
+      radial-gradient(ellipse 75% 60% at 50% 45%, rgba(4,33,24,.45), rgba(4,33,24,.9) 80%),
+      linear-gradient(180deg, rgba(4,33,24,.6) 0%, rgba(4,33,24,.2) 45%, var(--bg) 100%); }
+  .hero__rays { position: absolute; inset: 0; z-index: -1; pointer-events: none; opacity: .5;
+    background: repeating-conic-gradient(from 0deg at 50% 120%, rgba(212,175,55,.08) 0deg 4deg, transparent 4deg 12deg);
+    mask-image: radial-gradient(ellipse 60% 70% at 50% 100%, #000, transparent 70%);
+    -webkit-mask-image: radial-gradient(ellipse 60% 70% at 50% 100%, #000, transparent 70%); }
+  @keyframes drift { to { transform: scale(1.12) translate3d(-1.5%, -1%, 0); } }
+
+  .hero__body { width: min(960px, 100%); display: flex; flex-direction: column; align-items: center; text-align: center; }
+
+  .seal { width: clamp(76px, 11vw, 108px); aspect-ratio: 1; border-radius: 50%; background: #fff; padding: 4px; box-shadow: 0 0 0 4px rgba(212,175,55,.35), 0 18px 50px rgba(0,0,0,.45); overflow: hidden; }
+  .seal img { width: 100%; height: 100%; object-fit: cover; object-position: left center; }
+
+  .eyebrow { margin-top: 24px; display: inline-flex; align-items: center; gap: 12px; font-size: clamp(.7rem, 1.3vw, .8rem); font-weight: 600; letter-spacing: .22em; text-transform: uppercase; color: var(--gold); }
+  .eyebrow::before, .eyebrow::after { content: ""; width: 28px; height: 1px; background: currentColor; opacity: .7; }
+
+  h1 { margin-top: 16px; font-family: var(--serif); font-weight: 700; font-size: clamp(2.4rem, 7vw, 5.4rem); line-height: 1; letter-spacing: -.02em; text-wrap: balance; }
+  h1 em { font-style: italic; font-weight: 500; color: var(--gold); }
+  .lede { margin-top: 18px; max-width: 54ch; font-size: clamp(.95rem, 1.6vw, 1.1rem); line-height: 1.65; color: var(--muted); text-wrap: pretty; }
+
+  /* ---------- CLOCK ---------- */
+  .clock { margin-top: clamp(32px, 6vh, 56px); display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(8px, 1.8vw, 20px); width: 100%; max-width: 860px; }
+  .unit { position: relative; padding: clamp(16px, 3vw, 30px) 6px clamp(14px, 2.2vw, 22px); border: 1px solid var(--line); border-radius: clamp(14px, 1.8vw, 22px); background: linear-gradient(180deg, rgba(255,255,255,.09), rgba(255,255,255,.02)); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); }
+  .unit::before { content: ""; position: absolute; left: 22%; right: 22%; top: -1px; height: 2px; border-radius: 2px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
+  .num { display: block; font-family: var(--serif); font-weight: 700; font-variant-numeric: tabular-nums lining-nums; line-height: 1; font-size: clamp(2.3rem, 8.5vw, 5.4rem); }
+  .num.tick { animation: tick .45s cubic-bezier(.2,.8,.2,1); }
+  @keyframes tick { from { transform: translateY(-22%); opacity: 0; } to { transform: none; opacity: 1; } }
+  .lbl { display: block; margin-top: clamp(8px, 1.4vw, 12px); font-size: clamp(.6rem, 1.2vw, .76rem); font-weight: 600; letter-spacing: .22em; text-transform: uppercase; color: var(--muted); }
+
+  .done { display: none; margin-top: clamp(32px, 6vh, 56px); font-family: var(--serif); font-weight: 700; font-size: clamp(2rem, 6vw, 4rem); color: var(--gold); }
+  body.finished .clock { display: none; }
+  body.finished .done { display: block; }
+
+  .meta { margin-top: clamp(26px, 4.5vh, 40px); display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+  .chip { display: inline-flex; align-items: center; gap: 10px; padding: 10px 16px; border: 1px solid var(--line); border-radius: 999px; background: var(--panel); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); font-size: .85rem; font-weight: 500; }
+  .chip svg { width: 16px; height: 16px; color: var(--gold); flex-shrink: 0; }
+  .chip[hidden] { display: none; }
+
+  .actions { margin-top: 26px; display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
+  .btn { display: inline-flex; align-items: center; gap: 10px; padding: 14px 24px; border-radius: 999px; font-weight: 600; font-size: .95rem; text-decoration: none; transition: transform .2s, background .2s, border-color .2s; }
+  .btn--primary { background: var(--gold); color: #1a1505; }
+  .btn--primary:hover { background: #e3c158; transform: translateY(-2px); }
+  .btn--ghost { border: 1px solid var(--line); background: var(--panel); backdrop-filter: blur(10px); }
+  .btn--ghost:hover { border-color: rgba(255,255,255,.45); transform: translateY(-2px); }
+  .btn[hidden] { display: none; }
+
+  /* ---------- ABOUT ---------- */
+  .about { padding: clamp(64px, 10vw, 120px) clamp(18px, 4vw, 40px); border-top: 1px solid var(--line); background: radial-gradient(ellipse 70% 60% at 85% 0%, rgba(0,135,81,.18), transparent 70%), var(--bg); }
+  .about__inner { max-width: 1160px; margin: 0 auto; display: grid; gap: clamp(36px, 5vw, 72px); align-items: center; }
+  @media (min-width: 900px) { .about__inner { grid-template-columns: .85fr 1.15fr; } }
+  .about__media { position: relative; border-radius: 24px; overflow: hidden; border: 1px solid var(--line); aspect-ratio: 4 / 5; max-height: 560px; }
+  .about__media img { width: 100%; height: 100%; object-fit: cover; }
+  .about__media figcaption { position: absolute; left: 0; right: 0; bottom: 0; padding: 48px 20px 18px; background: linear-gradient(180deg, transparent, rgba(4,33,24,.92)); font-size: .8rem; color: var(--muted); }
+  .about__media figcaption b { display: block; color: var(--text); font-size: .95rem; margin-bottom: 2px; }
+  .about .eyebrow { margin-top: 0; }
+  .about .eyebrow::before { display: none; }
+  .about h2 { margin-top: 14px; font-family: var(--serif); font-weight: 700; font-size: clamp(1.9rem, 4vw, 3rem); line-height: 1.08; letter-spacing: -.015em; text-wrap: balance; }
+  .about p { margin-top: 16px; color: var(--muted); line-height: 1.75; max-width: 58ch; }
+  .pillars { margin-top: 32px; display: grid; gap: 12px; list-style: none; }
+  @media (min-width: 560px) { .pillars { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  .pillar { padding: 20px; border: 1px solid var(--line); border-radius: 16px; background: rgba(255,255,255,.03); }
+  .pillar b { display: block; font-family: var(--serif); font-size: 1.15rem; color: var(--gold); }
+  .pillar span { display: block; margin-top: 6px; font-size: .88rem; line-height: 1.55; color: var(--muted); }
+
+  /* ---------- FOOTER ---------- */
+  footer { border-top: 1px solid var(--line); }
+  .footer__inner { max-width: 1160px; margin: 0 auto; padding: 28px clamp(18px, 4vw, 40px); display: flex; flex-wrap: wrap; gap: 12px 32px; justify-content: space-between; font-size: .82rem; color: var(--muted); line-height: 1.6; }
+  .footer__inner a { text-decoration: underline; text-underline-offset: 3px; }
+
+  @media (max-width: 560px) {
+    .topbar__link .long { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hero__photo, .num.tick { animation: none !important; }
+    html { scroll-behavior: auto; }
+  }
+</style>
+</head>
+<body>
+<!--<div class="flag" aria-hidden="true"><span></span><span></span><span></span></div>-->
+
+<!--<header class="topbar">
+  <div class="topbar__inner">
+    <a href="https://icpc.gov.ng" target="_blank" rel="noopener">
+      <img class="topbar__logo" src="assets/icpc-logo.png" alt="Independent Corrupt Practices and Other Related Offences Commission (ICPC)">
+    </a>
+    <a class="topbar__link" href="https://icpc.gov.ng" target="_blank" rel="noopener"><span class="long">Visit</span> icpc.gov.ng <span aria-hidden="true">&rarr;</span></a>
+  </div>
+</header>-->
+
+<main>
+  <section class="hero" aria-labelledby="title">
+    <div class="hero__photo" aria-hidden="true"></div>
+    <div class="hero__scrim" aria-hidden="true"></div>
+    <div class="hero__rays" aria-hidden="true"></div>
+
+    <div class="hero__body">
+      <div class="seal"><img src="assets/icpc-logo2.webp" alt=""></div>
+      <p class="eyebrow" id="eyebrow"></p>
+      <h1 id="title"><span id="tb"></span> <em id="tl"></em></h1>
+      <p class="lede" id="lede"></p>
+
+      <div class="clock" role="timer" aria-label="Time remaining until the event">
+        <div class="unit"><span class="num" id="d">00</span><span class="lbl">Days</span></div>
+        <div class="unit"><span class="num" id="h">00</span><span class="lbl">Hours</span></div>
+        <div class="unit"><span class="num" id="m">00</span><span class="lbl">Minutes</span></div>
+        <div class="unit"><span class="num" id="s">00</span><span class="lbl">Seconds</span></div>
+      </div>
+      <p class="done" id="done" role="status"></p>
+
+      <div class="meta">
+        <span class="chip">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+          <span id="when"></span>
+        </span>
+        <span class="chip" id="venue-chip">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+          <span id="venue"></span>
+        </span>
+      </div>
+
+      <!--<div class="actions">
+        <a class="btn btn--primary" id="cta" href="#" target="_blank" rel="noopener"><span id="cta-text"></span> <span aria-hidden="true">&rarr;</span></a>
+        <a class="btn btn--ghost" href="#about">About ICPC</a>
+      </div>-->
+    </div>
+  </section>
+
+  <!--<section class="about" id="about" aria-labelledby="about-title">
+    <div class="about__inner">
+      <figure class="about__media">
+        <img src="assets/icpc-hq.jpg" alt="ICPC headquarters building in Abuja" loading="lazy">
+        <figcaption><b>ICPC Headquarters</b>Plot 802 Constitution Avenue, Central Business District, Abuja</figcaption>
+      </figure>
+      <div>
+        <p class="eyebrow">About the Commission</p>
+        <h2 id="about-title">Working together for a corruption-free Nigeria.</h2>
+        <p>Established under the ICPC Act 2000, the Independent Corrupt Practices and Other Related Offences Commission fights corruption by investigating and prosecuting offenders, strengthening public sector systems, and educating the public.</p>
+        <ul class="pillars">
+          <li class="pillar"><b>Enforcement</b><span>Investigating and prosecuting corrupt practices under the law.</span></li>
+          <li class="pillar"><b>Prevention</b><span>Reviewing and improving systems across public institutions.</span></li>
+          <li class="pillar"><b>Education</b><span>Mobilising citizens and youth against corruption.</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>-->
+</main>
+
+<footer>
+  <div class="footer__inner">
+    <span>&copy; <span id="year"></span> Independent Corrupt Practices and Other Related Offences Commission</span>
+    <span><a href="mailto:info@icpc.gov.ng">info@icpc.gov.ng</a> &middot; <a href="https://icpc.gov.ng" target="_blank" rel="noopener">icpc.gov.ng</a></span>
+  </div>
+</footer>
+
+<script>
+/* ============================================================
+   EDIT THESE VALUES
+   ============================================================ */
+const CONFIG = {
+  // Deadline in ISO format. +01:00 is Nigeria time (WAT).
+  deadline: "2026-11-15T10:00:00+01:00",
+
+  eyebrow: "Upcoming Event",
+  titleBold: "Event",
+  titleLight: "starting in",
+  lede: "Join the Independent Corrupt Practices and Other Related Offences Commission as we continue the work of building a transparent, accountable Nigeria.",
+  finishedMessage: "The event has begun",
+
+  venue: "Abuja, Nigeria",          // set null to hide
+  ctaText: "Learn more",
+  ctaUrl: "https://icpc.gov.ng",    // set null to hide the button
+
+  // Images live in the assets/ folder next to this file.
+  backgroundImage: "assets/abuja-dusk.png"
+};
+/* ============================================================ */
+
+const $ = id => document.getElementById(id);
+const end = new Date(CONFIG.deadline).getTime();
+
+$("eyebrow").textContent = CONFIG.eyebrow;
+$("tb").textContent = CONFIG.titleBold;
+$("tl").textContent = CONFIG.titleLight;
+$("lede").textContent = CONFIG.lede;
+$("done").textContent = CONFIG.finishedMessage;
+$("year").textContent = new Date().getFullYear();
+$("when").textContent = new Date(end).toLocaleString("en-NG", {
+  weekday: "short", day: "numeric", month: "long", year: "numeric",
+  hour: "numeric", minute: "2-digit", timeZone: "Africa/Lagos"
+}) + " WAT";
+
+if (CONFIG.venue) $("venue").textContent = CONFIG.venue;
+else $("venue-chip").hidden = true;
+
+const cta = $("cta");
+const ctaText = $("cta-text");
+if (cta && ctaText && CONFIG.ctaUrl) {
+  cta.href = CONFIG.ctaUrl;
+  ctaText.textContent = CONFIG.ctaText;
+} else if (cta) {
+  cta.hidden = true;
+}
+
+if (CONFIG.backgroundImage) {
+  document.documentElement.style.setProperty("--bg-image", `url("${CONFIG.backgroundImage}")`);
+}
+
+const pad = n => String(n).padStart(2, "0");
+const els = { d: $("d"), h: $("h"), m: $("m"), s: $("s") };
+
+function set(key, value) {
+  const el = els[key];
+  if (el.textContent === value) return;
+  el.textContent = value;
+  el.classList.remove("tick");
+  void el.offsetWidth;
+  el.classList.add("tick");
+}
+
+function update() {
+  const left = Math.max(0, end - Date.now());
+  set("d", pad(Math.floor(left / 86400000)));
+  set("h", pad(Math.floor(left / 3600000) % 24));
+  set("m", pad(Math.floor(left / 60000) % 60));
+  set("s", pad(Math.floor(left / 1000) % 60));
+
+  if (left === 0) {
+    document.body.classList.add("finished");
+    document.title = CONFIG.finishedMessage + " · ICPC Nigeria";
+    clearInterval(timer);
+  } else {
+    document.title = Math.floor(left / 86400000) + "d left · ICPC Nigeria";
+  }
+}
+
+const timer = setInterval(update, 1000);
+update();
+</script>
+</body>
+</html>
